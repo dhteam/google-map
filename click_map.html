@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script
+src="http://maps.googleapis.com/maps/api/js">
+</script>
+
+<script>
+var markers = [];
+
+var myCenter=new google.maps.LatLng(1.329226452997408,103.831787109375);
+
+function initialize()
+{
+var mapProp = {
+  center: myCenter,
+  zoom:12,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+function addMarker(location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map
+  });
+  var textPanel =  document.getElementById('textarea123');
+  textPanel.innerHTML = JSON.stringify(markers);
+}
+
+// Zoom to 9 when clicking on marker
+google.maps.event.addListener(map,'click',function(event) {
+	console.log(event.latLng.lat());
+	console.log(event.latLng.lng());
+	markers.push({'lat' : event.latLng.lat(), 'lng' : event.latLng.lng()});
+	addMarker(event.latLng);
+  });
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+
+<body>
+<div id="googleMap" style="width:100%;height:800px;"></div>
+<textarea id="textarea123" style="width:100%;height:80px;"></textarea>
+
+</body>
+
+<script>
+
+</script>
+</html>
